@@ -4,12 +4,12 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   Linting:
     runs-on: ubuntu-latest
-    environment: Devlopmnet Environment
+    environment: Development Environment
 
     steps:
     - name: Check the Repository
@@ -94,7 +94,7 @@ jobs:
 
     - name: Configure Kubeconfig
       run:
-       aws eks update-kubeconfig --name udacity-project4 --region us-east-1
+       aws eks update-kubeconfig --name cluster --region us-east-1
 
 
     - name: Deploy Docker Image to Amazon EKS

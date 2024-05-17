@@ -88,8 +88,8 @@ jobs:
       env:
         REPO_NAME: frontend
       run: |
-        docker build --build-arg=REACT_APP_MOVIE_API_URL=http://localhost:5000 --tag 477434320235.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$GITHUB_SHA_SHORT .
-        docker push 477434320235.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$GITHUB_SHA_SHORT
+        docker build --build-arg=REACT_APP_MOVIE_API_URL=http://localhost:5000 --tag 905542433414.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$GITHUB_SHA_SHORT .
+        docker push 905542433414.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$GITHUB_SHA_SHORT
 
 
     - name: Configure Kubeconfig
@@ -102,5 +102,5 @@ jobs:
       env:
         REPO_NAME: frontend
       run: |
-          kustomize edit set image frontend=477434320235.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$GITHUB_SHA_SHORT
+          kustomize edit set image frontend=905542433414.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$GITHUB_SHA_SHORT
           kustomize build | kubectl apply -f -

@@ -78,11 +78,11 @@ jobs:
     - name: Build and Push Docker Image
       working-directory: starter/backend
       env:
-        IMAGE_TAG: ${GITHUB_SHA:7}
+        IMAGE_TAG: ${GITHUB_SHA::7}
         REPO_NAME: backend
       run: |
-        docker build --build-arg=REACT_APP_MOVIE_API_URL=http://localhost:5000 --tag 477434320235.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$IMAGE_TAG .
-        docker push 477434320235.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$IMAGE_TAG
+        docker build --build-arg=REACT_APP_MOVIE_API_URL=http://localhost:5000 --tag 477434320235.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$(echo ${IMAGE_TAG}) .
+        docker push 477434320235.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$(echo ${IMAGE_TAG})
     - name: Update Kubeconfig
       run:
        aws eks update-kubeconfig --name cluster --region us-east-1
@@ -90,9 +90,9 @@ jobs:
     - name: Deploy Docker Image to Amazon EKS
       working-directory: starter/backend/k8s
       env:
-        IMAGE_TAG: ${GITHUB_SHA:7}
+        IMAGE_TAG: ${GITHUB_SHA::7}
         REPO_NAME: backend
       run: |
         aws eks update-kubeconfig --name cluster --region us-east-1
-        kustomize edit set image backend=477434320235.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$IMAGE_TAG
+        kustomize edit set image backend=477434320235.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$(echo ${IMAGE_TAG})
         kustomize build | kubectl apply -f -
